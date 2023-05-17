@@ -31,6 +31,9 @@ class TestBook(unittest.TestCase):
         with self.assertRaises(ValidationError):
             Book(title="The Great Gatsby", author="F. Scott Fitzgerald", description="A story of the decadent life of wealthy Americans during the Roaring Twenties", price=10.99, stock="44e")  # type: ignore
 
+        with self.assertRaises(ValidationError):
+            Book(title="The Great Gatsby", author="F. Scott Fitzgerald", description="A story of the decadent life of wealthy Americans during the Roaring Twenties", price=10.99, stock="one hundred")  # type: ignore
+
     def test_create_book_with_invalid_title(self):
         with self.assertRaises(ValidationError):
             Book(title=None, author="F. Scott Fitzgerald", description="A story of the decadent life of wealthy Americans during the Roaring Twenties", price=10.99, stock=100)  # type: ignore
@@ -42,8 +45,6 @@ class TestBook(unittest.TestCase):
     def test_create_book_with_invalid_description(self):
         with self.assertRaises(ValidationError):
             Book(title="The Great Gatsby", author="F. Scott Fitzgerald", description=None, price=10.99, stock=100)  # type: ignore
-        with self.assertRaises(ValidationError):
-            Book(title="The Great Gatsby", author="F. Scott Fitzgerald", description="A story of the decadent life of wealthy Americans during the Roaring Twenties", price=10.99, stock="one hundred")  # type: ignore
 
     def test_create_book_with_missing_title(self):
         with self.assertRaises(ValidationError):
