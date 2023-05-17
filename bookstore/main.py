@@ -32,11 +32,6 @@ async def add_book(title: str, author: str, description: str, price: float, stoc
     return {"message": "success"}
 
 
-"""
-curl -X POST "http://localhost:8000/add_book" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"author\": \"string\", \"description\": \"string\", \"price\": 0, \"stock\": 0, \"title\": \"string\"}"
-"""
-
-
 @app.get("/get_books")
 async def get_books():
     documents = db.find()
