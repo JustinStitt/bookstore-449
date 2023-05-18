@@ -27,9 +27,10 @@ if __name__ == "__main__":
     # from .book import Book
 
     db = DB().collection
-    result = db.find_one({"_id": ObjectId("6464542c184525d3db84dcce")})
-    # result = db.find_one({"title": "The Great Gatsby"})
-    print(result)
+    # db.create_index([("$**", "text")])
+    # result = db.find_one({"_id": ObjectId("6464542c184525d3db84dcce")})
+    # # result = db.find_one({"title": "The Great Gatsby"})
+    # print(result)
 
     # book = Book(
     #     title="The Great Gatsby",

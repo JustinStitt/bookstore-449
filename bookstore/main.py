@@ -79,3 +79,19 @@ async def delete_book_by_id(book_id: str):
         )
 
     return {"message": f"deleted book with id {book_id}"}
+
+
+@app.get("/search")
+async def search_for_book(
+    title: str | None = None,
+    author: str | None = None,
+    min_price: float = 0.0,
+    max_price: float = 10e9,
+):
+    in_price_range = {"price": {"$gte": min_price, "$lte": max_price}}
+    has_title = {"title": title}
+    has_author = {"author": author}
+    query = {"$or": [has_title, has_author], **in_price_range}
+
+    results = db.find(query)
+    return JSONResponse(content=dumps(results))
