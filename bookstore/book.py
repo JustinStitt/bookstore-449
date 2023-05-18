@@ -7,3 +7,11 @@ class Book(BaseModel):
     description: str
     price: float
     stock: int
+
+
+class BookUpdate(BaseModel):
+    title: str | None
+    author: str | None
+    description: str | None
+    price: float | None
+    stock: int | None

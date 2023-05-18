@@ -1,11 +1,11 @@
 from bson import ObjectId
 from bson.json_util import dumps
 from bson.errors import InvalidId
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 from fastapi.responses import JSONResponse
 from pymongo.errors import DuplicateKeyError
 
-from .book import Book
+from .book import Book, BookUpdate
 from .db import DB
 
 app = FastAPI()
@@ -57,3 +57,20 @@ async def get_book_by_id(book_id: str):
         )
 
     return JSONResponse(content=dumps(result))
+
+
+@app.post("/books/{book_id}")
+async def update_book_by_id(book_id: str, book: BookUpdate = Depends()):
+    try:
+        obj_id = ObjectId(book_id)
+    except InvalidId as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Invalid ID provided... {e} e.g. '6464542c184525d3db84dcce'",
+        )
+
+    changed_fields = {k: v for (k, v) in book.dict().items() if v is not None}
+    result = db.update_one({"_id": obj_id}, {"$set": changed_fields})
+    return {
+        "message": f"updated {result.modified_count} book{'s' if result.modified_count != 1 else ''}"
+    }
