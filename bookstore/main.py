@@ -18,10 +18,7 @@ async def root():
 
 
 @app.post("/books")
-async def add_book(title: str, author: str, description: str, price: float, stock: int):
-    book = Book(
-        title=title, author=author, description=description, price=price, stock=stock
-    )
+async def add_book(book: Book = Depends()):
     try:
         result = db.insert_one(book.dict())
         if not result:

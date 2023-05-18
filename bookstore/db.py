@@ -1,5 +1,4 @@
 import os
-from bson import ObjectId
 
 from pymongo import MongoClient
 
