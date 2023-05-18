@@ -1,4 +1,5 @@
 import os
+from bson import ObjectId
 
 from pymongo import MongoClient
 
@@ -18,21 +19,25 @@ class DB:
         return cls._instance
 
     def __init__(self):
-        self.client = MongoClient(DB_URL).cpsc449.bookstore
+        self.client = MongoClient(DB_URL)
+        self.collection = self.client.cpsc449.bookstore
 
 
 if __name__ == "__main__":
-    from .book import Book
+    # from .book import Book
 
-    # db = DB().client.cpsc449.bookstore
+    db = DB().collection
+    result = db.find_one({"_id": ObjectId("6464542c184525d3db84dcce")})
+    # result = db.find_one({"title": "The Great Gatsby"})
+    print(result)
 
-    book = Book(
-        title="The Great Gatsby",
-        author="F. Scott Fitzgerald",
-        description="A story of the decadent life of wealthy Americans during the Roaring Twenties",
-        price=10.99,
-        stock=100,
-    )
+    # book = Book(
+    #     title="The Great Gatsby",
+    #     author="F. Scott Fitzgerald",
+    #     description="A story of the decadent life of wealthy Americans during the Roaring Twenties",
+    #     price=10.99,
+    #     stock=100,
+    # )
     # result = db.insert_one(book.dict()) # raises DuplicateKeyErorr if already exists (title + author combo)
     # print(result.inserted_id)
 
