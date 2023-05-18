@@ -95,3 +95,28 @@ async def search_for_book(
 
     results = db.find(query)
     return JSONResponse(content=dumps(results))
+
+
+@app.get("/total")
+async def get_total_books():
+    return db.count_documents({})
+
+
+@app.get("/popular_authors")
+async def get_popular_authors():
+    pipeline = [
+        {"$group": {"_id": "$author", "count": {"$sum": 1}}},
+        {"$sort": {"count": -1}},
+        {"$limit": 5},
+    ]
+
+    results = list(db.aggregate(pipeline))
+
+    return JSONResponse(content=dumps(results))
+
+
+@app.get("/best_selling")
+async def get_best_selling():
+    results = db.find().sort("stock", -1).limit(5)
+
+    return JSONResponse(content=dumps(results))
