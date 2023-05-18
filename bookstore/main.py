@@ -1,11 +1,7 @@
-from typing import Union
-
 from bson import ObjectId
-from bson.errors import InvalidId
 from bson.json_util import dumps
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import JSONResponse
-from pydantic.utils import Obj
 from pymongo.errors import DuplicateKeyError
 
 from .book import Book, BookUpdate
