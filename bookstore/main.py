@@ -97,6 +97,7 @@ async def get_total_books():
 
 @app.get("/popular_authors")
 async def get_popular_authors():
+    """Get top 5 authors by number of books released"""
     pipeline = [
         {"$group": {"_id": "$author", "count": {"$sum": 1}}},
         {"$sort": {"count": -1}},

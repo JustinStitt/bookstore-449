@@ -9,6 +9,11 @@ DB_URL = f"mongodb+srv://{DB_USERNAME}:{DB_PASS}@test-cluster.tak0x4e.mongodb.ne
 
 
 class DB:
+    """
+    Singleton design pattern for Database instance management
+    (only allow a single DB to be constructed)
+    """
+
     _instance = None
 
     def __new__(cls):
@@ -23,6 +28,9 @@ class DB:
 
 
 if __name__ == "__main__":
+    """
+    random stuff for testing... not important
+    """
     # from .book import Book
 
     db = DB().collection
